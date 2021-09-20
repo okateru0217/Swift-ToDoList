@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var listTableView: UITableView!
     
-    private let task = [2, 2, 2]
+    private var list = ["リスト１", "リスト２", "リスト３"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,23 +22,30 @@ class ViewController: UIViewController {
     }
 
     @objc func tableTapped(_ sender: UITapGestureRecognizer) {
-        print("test")
+        list.append("")
+        listTableView.reloadData()
     }
 
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return task.count
+        return list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = listTableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath) as! listTableViewCell
+        let cell = listTableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath) as! ListTableViewCell
+        cell.listTextField.delegate = self
+        cell.listTextField.text = list[indexPath.row]
+        guard cell.listTextField.text?.count != 0 else {
+            cell.listTextField.becomeFirstResponder()
+            return cell
+        }
         return cell
     }
     
     func tableViewRegister() {
-        listTableView.register(UINib(nibName: "listTableViewCell", bundle: nil), forCellReuseIdentifier: "listCell")
+        listTableView.register(UINib(nibName: "ListTableViewCell", bundle: nil), forCellReuseIdentifier: "listCell")
     }
     
     func tableViewFooterCellConfig() {
@@ -50,4 +57,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         self.listTableView.tableFooterView?.addGestureRecognizer(tap)
     }
     
+}
+
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("a")
+        return true
+    }
 }
