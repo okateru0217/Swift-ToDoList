@@ -61,7 +61,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("a")
+        list.removeLast()
+        list.append(textField.text!)
         return true
     }
 }
