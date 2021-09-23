@@ -19,6 +19,14 @@ class ViewController: UIViewController {
         listTableView.dataSource = self
         tableViewRegister()
         tableViewFooterCellConfig()
+        tableViewBackgroundConfig()
+    }
+    
+    // 「+」ボタンがあるCellの下の余白を押した時の処理
+    func tableViewBackgroundConfig() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
+        self.listTableView.backgroundView = UIView()
+        self.listTableView.backgroundView?.addGestureRecognizer(tap)
     }
 
     @objc func tableTapped(_ sender: UITapGestureRecognizer) {
@@ -48,11 +56,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         listTableView.register(UINib(nibName: "ListTableViewCell", bundle: nil), forCellReuseIdentifier: "listCell")
     }
     
+    // 「+」ボタンの設定
     func tableViewFooterCellConfig() {
         let footerCell: UITableViewCell = listTableView.dequeueReusableCell(withIdentifier: "addListButtonCell")!
         let footerView: UIView = footerCell.contentView
-        listTableView.tableFooterView = footerView
-        
+        self.listTableView.tableFooterView = footerView
+
+        // 「+」ボタン押下時の処理
         let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
         self.listTableView.tableFooterView?.addGestureRecognizer(tap)
     }
@@ -63,6 +73,7 @@ extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         list.removeLast()
         list.append(textField.text!)
+        textField.resignFirstResponder()
         return true
     }
 }
