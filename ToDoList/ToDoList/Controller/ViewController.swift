@@ -72,7 +72,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         list.removeLast()
-        list.append(textField.text!)
+        if textField.text!.count > 0 {
+            list.append(textField.text!)
+        }
+        listTableView.reloadData()
         textField.resignFirstResponder()
         return true
     }
