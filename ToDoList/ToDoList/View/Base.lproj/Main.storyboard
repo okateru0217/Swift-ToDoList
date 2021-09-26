@@ -35,6 +35,9 @@
                                                     </constraints>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" image="plus" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="addListButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hvb-g0-g7R"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
